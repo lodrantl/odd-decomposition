@@ -1,0 +1,135 @@
+\documentclass[12pt,a4paper]{amsart}
+% ukazi za delo s slovenscino -- izberi kodiranje, ki ti ustreza
+\usepackage[slovene]{babel}
+%\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{url}
+\usepackage{graphicx}
+%\usepackage[demo]{graphicx}
+%\usepackage[normalem]{ulem}
+\usepackage[dvipsnames,usenames]{color}
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = gray
+}
+
+% ne spreminjaj podatkov, ki vplivajo na obliko strani
+\textwidth 15cm
+\textheight 24cm
+\oddsidemargin.5cm
+\evensidemargin.5cm
+\topmargin-5mm
+\addtolength{\footskip}{10pt}
+\pagestyle{plain}
+\overfullrule=15pt % oznaci predlogo vrstico
+
+
+% ukazi za matematicna okolja
+\theoremstyle{definition} % tekst napisan pokoncno
+\newtheorem{definicija}{Definicija}[section]
+\newtheorem{primer}[definicija]{Primer}
+\newtheorem{opomba}[definicija]{Opomba}
+
+\renewcommand\endprimer{\hfill$\diamondsuit$}
+
+
+\theoremstyle{plain} % tekst napisan posevno
+\newtheorem{lema}[definicija]{Lema}
+\newtheorem{izrek}[definicija]{Izrek}
+\newtheorem{trditev}[definicija]{Trditev}
+\newtheorem{posledica}[definicija]{Posledica}
+
+
+% za stevilske mnozice uporabi naslednje simbole
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+
+% ukaz za slovarsko geslo
+\newlength{\odstavek}
+\setlength{\odstavek}{\parindent}
+\newcommand{\geslo}[2]{\noindent\textbf{#1}\hspace*{3mm}\hangindent=\parindent\hangafter=1 #2}
+
+% naslednje ukaze ustrezno popravi
+\newcommand{\program}{Finančna matematika} % ime studijskega programa: Matematika/Finan"cna matematika
+\newcommand{\imeavtorja}{Luka Lodrant} % ime avtorja
+\newcommand{\imementorja}{Janoš Vidali} % akademski naziv in ime mentorja
+\newcommand{\naslovdela}{Razbitje grafa na dva disjunktna liha podgrafa}
+\newcommand{\letnica}{2019} %letnica
+
+
+% vstavi svoje definicije ...
+
+
+
+
+\begin{document}
+
+% od tod do povzetka ne spreminjaj nicesar
+\thispagestyle{empty}
+\noindent{\large
+UNIVERZA V LJUBLJANI\\[1mm]
+FAKULTETA ZA MATEMATIKO IN FIZIKO\\[5mm]
+\program\ -- 1.~stopnja}
+\vfill
+
+\begin{center}{\large
+\imeavtorja\\[2mm]
+{\bf \naslovdela}\\[10mm]
+Projekt v povezavi z OR\\[1cm]}
+
+\end{center}
+\vfill
+
+\noindent{\large
+Ljubljana, \letnica}
+\pagebreak
+
+\thispagestyle{empty}
+\hypersetup{linkcolor = black}
+\tableofcontents
+\pagebreak
+
+\section{Navodilo}
+
+In the paper
+https://arxiv.org/abs/1802.07991
+the authors gave a characterization when a graph can be decomposed into two disjoint odd subgraphs. Their result, based on the Gaussian elimination method, implies a polynomial time algorithm to verify this kind od decomposability. Implement this algorithm; then for small values of
+n, verify the percentage of graphs on n vertices that can be decomposed in the prescribed way.
+Similarly, you can also consider other classes of graphs, say small bipartite graphs, trees, . . .
+
+
+
+
+
+\section{Uvod}
+
+Osnovni predmet obravnave tega dela bodo \emph{multigrafi}, ki lahko vzporedne povezave, nimajo pa zank. Grafu brez podvojenih povezav in zank rečemo \emph{enostaven graf}.
+Naj bo $G=(V(G),  E(G))$ multigraf. Z $OddV(G)$ bomo označili množico oglišč z lihimi stopnjami, z $EvenV(G)$ pa množico oglišč s sodimi stopnjami.
+Lih (oz. sod) podgraf grafa $G$ je podgraf, katerega vsa oglišča so lihe (oz. sode) stopnje.
+\\
+
+Naš cilj je, da ugotovimo, kdaj je možno graf razbiti na 2 podgrafa lihe stopnje in za to implementirati polinomski algoritem.
+Z uporabo tega algoritma pa bomo v drugem delu analizirali kakšen delež posebnih kategorij grafov je možno na tak način razbiti.
+\\
+
+Projekt bomo implementirali v programskem jeziku \emph{Python3}, veliko pa bomo uporabljali knjižnico \emph{networkx} za delo z grafi.
+
+\section{Matematična podlaga}
+
+\section{Implementacija algoritma}
+
+\section{Analiza posebnih grafov}
+
+\subsection{Mali grafi}
+\subsection{Dvodelni grafi}
+\subsection{Drevesa in gozdovi}
+
+
+
+\end{document}
