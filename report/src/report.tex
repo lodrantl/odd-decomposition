@@ -118,18 +118,53 @@ Naš cilj je, da ugotovimo, kdaj je možno graf razbiti na 2 podgrafa lihe stopn
 Z uporabo tega algoritma pa bomo v drugem delu analizirali kakšen delež posebnih kategorij grafov je možno na tak način razbiti.
 \\
 
-Projekt bomo implementirali v programskem jeziku \emph{Python3}, veliko pa bomo uporabljali knjižnico \emph{networkx} za delo z grafi.
+Projekt bomo implementirali v programskem jeziku \emph{Python 3}, veliko pa bomo uporabljali knjižnico \emph{networkx} za delo z grafi.
 
 \section{Matematična podlaga}
 
+
+
 \section{Implementacija algoritma}
+Kot že povedano smo se implementacije lotili v programskem jeziku \emph{Python 3}, za delo z grafi smo se odločili za uporabo knjižnice \emph{networkx}.
+Algoritem je implementiran v datotek \emph{decomposition/decomposition.py}. Za lažjo uporabo z grafi, ki jih generira \emph{networkx} sam, smo naše funkcije
+le dodali osnovnemu \emph{nx.Graph} razredu.
+Pri reševanju linearnega sistema v $GF(2)$ smo si pomagali z \emph{Matrix} razredom %citiram.
+
+Ko smo enkrat razumeli, kako prej opisan algoritem deluje, njegova implementacija ni bila posebno zahtevna, vse je bolje opisano v komentarjih poleg kode.
+Paziti je bilo potrebno na par posebnih primerov, kot npr. razbitje že lihega grafa, pri katerem linearni sistem ne obstaja.
 
 \section{Analiza posebnih grafov}
 
 \subsection{Mali grafi}
+
+Prva stvar, ki nas je zanimala, je bila kolikšen delež grafov na malem številu oglišč je možno razbiti na dva liha grafa.
+Grafe smo zgenerirali tako, da smo za vsak $n$ sestavili množico vseh možnih povezav v grafu, potem pa sestavili njeno potenčno množico.
+Nato smo vsak tako dobljen graf poskusili razbiti in le prešteli, za koliko grafov je bilo to možno.
+\\
+
+Do $n=7$ je tak princip deloval, nato pa smo pri $n=8$ prišli do težave, saj na toliko vozliščih obstaja kar $268435456 \approx 2.6 * 10^8$ grafov.
+Z osnovnim algoritmom bi tako potrebovali približno $110h \approx 4,5 dneva$, kar pa nismo želeli. Algoritem smo najprej malo optimizirali, namesto sesnamov smo
+na primernih mestih uporabili sete oz. generatorje, in na začetku preverili ali ima graf kakšno izolirano oglišče, saj takšnega grafa ni mogoče razbiti.
+\\
+
+To ni bilo dovolj, ocenjeni čas je zmanjšalo le na približno $70h$. Sedaj bi lahko poskusili algoritem še izboljšati z uporabo nižjenivojskega jezika in bolj
+primernih podatkovnih struktur, kar pa bi nam lahko vzelo precej več dela. Namesto tega, smo se odločili, da bomo le uporabili malo več procesorske moči. Primerno
+smo razbili našo testno množico in paralelizirali razbitja. Tako smo na enem samem osemjedrnem računalniku s 14 nitmi prišli do tega, da je izračun trajal "le" $4.5h$.
+\\
+
+Rezultate testov predstavimo v tabeli in pa v grafih:
+
+
+
 \subsection{Dvodelni grafi}
 \subsection{Drevesa in gozdovi}
 
 
 
 \end{document}
+
+% viri
+% https://www.nayuki.io/page/gauss-jordan-elimination-over-any-field
+% networkx
+% osnovni vir
+% prvi cite iz osnovnega
