@@ -1,5 +1,6 @@
-from decompositon.misc import parallel, timing
-from decompositon.decomposition import NotDecomposableError
+from misc import parallel, timing
+import decomposition
+from decomposition import NotDecomposableError
 import networkx as nx
 from datetime import datetime
 
@@ -45,8 +46,9 @@ def check(n, p):
         sum = 0
         inp = map(lambda x: create_graph(x, range(n)), inp)
         for y in inp:
+            # check if it has an isolated node
             try:
-                d = y.odd_decomposition()
+                d = decomposition.odd_decomposition(y)
                 sum += 1
             except NotDecomposableError:
                 pass
@@ -62,11 +64,14 @@ def check(n, p):
     return (ok, all)
 
 
+import csv
+
 if __name__ == "__main__":
-    with open("../results/small_graph.txt", "a+") as file:
-        file.write(f"Starting new run at: {datetime.now().replace(microsecond=0).isoformat()} \n")
+    with open('../results/small_graphs.csv', 'w', newline='') as csvfile:
+        columns = ["n", "decomposable", "all", "percentage", "time"]
+        writer = csv.DictWriter(csvfile, fieldnames=columns)
+        writer.writeheader()
         for i in range(3, 9):
-            ok, all = check(8, True)
-            file.write(f"Grafi velikosti N={i}: {ok} out of {all}, {100 * ok / all:.2f}% \n")
-            file.flush()
-        file.write("\n")
+            (ok, all), time = check(i, True)
+            writer.writerow({"n": i, "decomposable": ok, "all": all, "percentage": ok / all * 100, "time": time})
+            csvfile.flush()

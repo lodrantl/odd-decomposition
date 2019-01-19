@@ -6,13 +6,13 @@ into two odd subgraphs. In this module we have implemented
 a polnomyial algorithm to check if such a decomposition exists.
 
 #### Layout:
-* decomposition
+* decomposition/
     * decomposition.py - main decomposition algorithm, patches nx.Graph
     * misc.py - misc functions used in other scripts
     * small_graphs.py - analysis of small graphs
-* vendor
-    * fieldmath.py - Gauss-Jordan elimination over any field
-* report - LaTex report of this project
+    * vendor/
+        * fieldmath.py - Gauss-Jordan elimination over any field
+* report/ - LaTex report of this project
 * requirements.txt - required Python 3 libraries
 
 #### Usage:
@@ -27,3 +27,5 @@ a polnomyial algorithm to check if such a decomposition exists.
     G.add_edge(3, 5)
     G.add_edge(3, 6)
     G.add_edge(5, 6)
+    red, blue = G.odd_decomposition()
+    
