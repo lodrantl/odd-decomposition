@@ -97,7 +97,7 @@ def odd_decomposition(G) -> Tuple[Set[int], Set[int]]:
     # create a MultiGraph copy of G
     G = nx.MultiGraph(G)
 
-    # remove isolated nodes from the graph, since they are irrelevant
+    # remove isolated nodes from the graph, since they are irrelevant and we are working on a copy
     G.remove_nodes_from(list(nx.isolates(G)))
 
     # if the base graph is already odd

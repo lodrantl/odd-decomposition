@@ -4,6 +4,9 @@ from decomposition import NotDecomposableError
 import networkx as nx
 from datetime import datetime
 
+# analysis of graphs on small number of vertices
+# we only check each isomorphic group for odd decompose once
+# data comes from http://users.cecs.anu.edu.au/~bdm/data/graphs.html
 
 def chunk_generator(f, chunk_size, all):
     """
