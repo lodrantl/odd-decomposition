@@ -4,6 +4,9 @@ from decomposition import NotDecomposableError
 import networkx as nx
 from datetime import datetime
 
+# analysis of graphs on small numbe rof vertices
+# we generate all possible graphs on n vertices
+# and check how many are odd decomposable
 
 def powerset(iterable, chunk_size=10000):
     """
