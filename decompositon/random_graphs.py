@@ -1,17 +1,18 @@
-from misc import parallel, timing
+from misc import parallel, timing, draw_graph
 import decomposition
 from decomposition import NotDecomposableError
 import networkx as nx
 from datetime import datetime
+
 
 # we generate random graphs on n vertices with m edges
 # our goal is to find out how number of edges affects decomposability
 
 @timing
 def check(n):
-    repeats = 10000
+    repeats = 500
 
-    max_edges = n * (n-1) // 2
+    max_edges = n * (n - 1) // 2
 
     print(f"Running decomposition: N={n}")
 
@@ -29,22 +30,21 @@ def check(n):
     # compute the actual number of decomposable graphs
     # we use the helper function from misc, which uses joblib to run work in multiple threads
     # this also displays the progress bar using tqdm
-    ok = parallel(work, range(max_edges+1), max_edges+1)
+    ok = parallel(work, range(max_edges + 1), max_edges + 1)
 
-    return ok
+    return ok, max_edges
 
 
 import csv
 from matplotlib import pyplot as plt
+
 if __name__ == "__main__":
-    ok, time = check(15)
-    plt.plot([i/100 for i in ok])
-    plt.show()
-    # with open('../results/small_graphs.csv', 'w', newline='') as csvfile:
-    #     columns = ["n", "decomposable", "all", "percentage", "time"]
-    #     writer = csv.DictWriter(csvfile, fieldnames=columns)
-    #     writer.writeheader()
-    #     for i in range(3, 9):
-    #         (ok, all), time = check(i, True)
-    #         writer.writerow({"n": i, "decomposable": ok, "all": all, "percentage": ok / all * 100, "time": time})
-    #         csvfile.flush()
+    with open('../results/random_graphs.csv', 'w', newline='') as csvfile:
+        columns = ["n", "m", "percentage", "time"]
+        writer = csv.DictWriter(csvfile, fieldnames=columns)
+        writer.writeheader()
+        for i in [20, 21, 22, 23]:
+            (ok, all), time = check(i)
+            for m, k in enumerate(ok):
+                writer.writerow({"n": i, "m" : m, "percentage": k, "time": time})
+            csvfile.flush()
