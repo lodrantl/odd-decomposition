@@ -38,18 +38,21 @@ def timing(f):
     return wrap
 
 
-def draw_graph(G, red, blue):
-    pos = nx.spring_layout(G)  # positions for all nodes
+def draw_graph(G, red, blue, pos = None):
+    G = nx.MultiGraph(G)
+
+    if pos == None:
+        pos = nx.spring_layout(G)  # positions for all nodes
 
     # nodes
     nx.draw_networkx_nodes(G, pos, node_color='black')
 
     # edges
     nx.draw_networkx_edges(G, pos,
-                           edgelist=[(u,v) for u,v, k in red],
+                           edgelist=red,
                            width=8, alpha=0.5, edge_color='r')
     nx.draw_networkx_edges(G, pos,
-                           edgelist=[(u,v) for u,v, k in red],
+                           edgelist=blue,
                            width=8, alpha=0.5, edge_color='b')
 
     plt.axis('off')

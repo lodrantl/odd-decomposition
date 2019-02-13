@@ -11,7 +11,7 @@
 %\usepackage[normalem]{ulem}
 \usepackage[dvipsnames,usenames]{color}
 \usepackage{hyperref}
-
+\usepackage{float}
 \usepackage{adjustbox}
 
 \usepackage{xcolor}
@@ -217,16 +217,65 @@ Tako smo na enem samem osemjedrnem računalniku s 14 nitmi prišli do tega, da j
 4           & 64           & 35               & 54.68 \%     & 0.49 s         \\ \hline
 5           & 1024         & 345              & 33.69 \%     & 0.66 s         \\ \hline
 6           & 32768        & 19894            & 60.71 \%     & 3.36 s         \\ \hline
-7           & 2097152      & 638967           & 30.47 \%    & 144 s          \\ \hline
+7           & 2097152      & 638967           & 30.47 \%     & 144 s          \\ \hline
+8           & 186344860    & 268435456        & 69.42 \%     & 50278 s        \\ \hline
 \end{tabular}
 \end{adjustbox}
 
+\begin{figure*}[h]
+\centering
+\includegraphics[width=1\textwidth]{images/sm_graph_cases}
+\end{figure*}
+
+Prvi graf nam za občutek prikaže kako hitra je rast števila grafov, zanima pa nas predvsem drugi.
+
+\begin{figure*}[h]
+\centering
+\includegraphics[width=1\textwidth]{images/sm_graph_success}
+\end{figure*}
+
+
+Tukaj prvič vidimo nihanje uspešnosti med lihimi in sodimi števili vozlišč. Na lihih je uspešnost razbitja
+manjša kot na sodih. Ta rezultat bomo kasneje videli tudi v drugih primerih grafov.
+Jasnih trendov na tem grafu ne moremo opaziti, saj imamo premalo podatkov.
+Tisti pri $n=3$ in $n=4$ zaradi malega števila grafov samih niso realen pokazatelj trenda.
+
 \subsection{Izomorfni razredi grafov}
 \emph{decomposition/small\_graphs\_isomorphic.py}
-
 %http://users.cecs.anu.edu.au/~bdm/data/graphs.html
-Z analizo vseh možnih grafov ne bomo prišli daleč, saj njihovo število prehitro raste. Malo dlje lahko pridemo tako, da se
-omejimo le na izomorfne razrede grafov. Teh ne bomo generirali samo, temveč smo jih prenesli iz \cite{isomorph} v obliki graph6.
+
+Tako opazimo, da z analizo vseh možnih grafov ne bomo prišli daleč, saj njihovo število prehitro raste.
+Malo dlje lahko pridemo tako, da se omejimo le na izomorfne razrede grafov.
+Teh ne bomo generirali samo, temveč smo jih prenesli iz \cite{isomorph} v obliki \emph{graph6}.
+
+Rezultate spet predstavimo z isto tabelo in grafi.
+
+\begin{adjustbox}{width={\textwidth},totalheight={\textheight},keepaspectratio}%
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{število vozlišč} & \textbf{število grafov} & \textbf{število uspešnih} & \textbf{uspešnost} & \textbf{čas izvajanja} \\ \hline
+2    & 2            & 2         & 100.00 \%   & 0.61 s     \\ \hline
+3    & 4            & 3         & 75.00 \%    & 0.39 s     \\ \hline
+4    & 11           & 9         & 81.81 \%    & 0.38 s     \\ \hline
+5    & 34           & 19        & 55.88 \%    & 0.36 s     \\ \hline
+6    & 156          & 109       & 69.87 \%    & 0.09 s     \\ \hline
+7    & 1044         & 428       & 41.00 \%    & 0.62 s     \\ \hline
+8    & 12346        & 8465      & 68.56 \%    & 7.66 s     \\ \hline
+9    & 274668       & 82138     & 29.90 \%    & 50.1 s     \\ \hline
+10   & 12005168     & 8910781   & 74.22 \%    & 3043 s     \\ \hline
+\end{tabular}
+\end{adjustbox}
+
+\begin{figure*}[h]
+\centering
+\includegraphics[width=1\textwidth]{images/success_isomorphic.png}
+\end{figure*}
+
+Na graf smo dodali tudi uspešnost na vseh in vidimo, da se skoraj ujemata.
+Bolje lahko prepoznamo tudi vzorec lihih in sodih, kjer je pri lihin $n$ uspešnost nižja
+kot pri sodih. Opazimo lahko tudi, da za lihe $n$ uspešnost pada, medtem ko za sode počasi raste, vendar
+ne moremo trditi, da je to pravilo, saj je podatkov premalo.
+\pagebreak
 
 \subsection{Vpliv števila povezav}
 \emph{decomposition/random\_graphs.py}
@@ -236,12 +285,43 @@ oglišč $n$ generirali po 10000 naključnih grafov z $m$ povezavami za vsak mo�
 ki nam z enako verjetnostjo vrne vsak graf z $n$ oglišči in $m$ povezavami. To bomo storili tudi za več razliščnih $n$ in
 poskusili ugotoviti, ali med vsemi temi parametri obstaja kakšna povezava.
 
-Grafe bomo generirali naključno, saj nas ta vpliv zanima za velike $n$ za katere ne moremo preizkusiti vseh.
+Grafe bomo generirali naključno, saj nas ta vpliv zanima za velike $n$ za katere ne moremo preizkusiti vseh. Izbrali smo si
+analizo $n$ od $20$ do $23$.
+Tabela nam v tem primeru ne pomaga, zato si le izrišemo graf uspešnosti v odvisnosti od števila povezav.
 
-\subsection{Dvodelni grafi}
-\emph{decomposition/bipartite\_graphs.py}
+\begin{figure*}[h]
+\centering
+\includegraphics[width=1\textwidth]{images/random_graphs.png}
+\end{figure*}
 
-Dvodelni grafi so malo preprostejši in mogoče lahko naš algoritem za njih tudi izboljšamo.
+Spet lahko ločimo sode od lihih primerov. Na lihem številu vozlišč verjetnost s številom povezav
+pada, medtem ko za sode velja, da so grafi z malim in tisti z velikim številom povezav so večinoma razcepni, za tiste vmes pa je verjetnost,
+da so razcepni nižja. Pri grafu z vsemi povezavami oz. tistemu z eno manj vidimo, da razcepnost skoči,
+to pa le zato, ker tak graf obstaja le en, in je zato lahko verjetnost le $0$ oz. $1$.
+
+\pagebreak
+
+\subsection{Čas delovanja}
+\emph{decomposition/timedifficulty.py}
+
+Za konec lahko preverimo še, kako z rastjo števila oglišč raste čas izvajanja algoritma.
+Za ta namen bomo grafe spet generirali naključno, ampak drugače kot prej. Namesto fiksnega števila
+povezav, bomo za vsako povezavo rekli, da jo z verjetnostjo $0.7$ dodamo v graf.
+Nato smo za vsak deseti $n$ poskusili razbiti $100$ takšnih grafov in izračunali povprečen čas izvajanja za en primer.
+
+\begin{figure*}[h]
+\centering
+\includegraphics[width=1\textwidth]{images/timed.png}
+\end{figure*}
+
+
+Čase izvajanja prikažemo na grafu in vidimo, da se polinomska krivulja tretje stopnje zelo prilega,
+kar tudi empirično potrjuje teoretično časovno zahtevnost. Odstopanja nastajajo zaradi majhnega števila
+naključnih primerov. Če bi to število dvignili, je linija bolj gladka, ampak za izračun porabimo preveč časa.
+Za naše potrebe je 100 primerov vsake velikosti povsem dovolj.
+
+
+\section{Zaključek}
 
 \begin{thebibliography}{9}
 
